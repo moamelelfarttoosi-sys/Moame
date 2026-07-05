@@ -32,6 +32,11 @@ top-level layout and what each part is responsible for, e.g.:
 
 When adding a new top-level directory, add a one-line description here.
 
+- `.claude/skills/` — Claude Code skills available in this repo.
+  - `claude-fable-5-reference/` — archived reference copy of a Claude system
+    prompt, saved for study/consultation. Reference material only; see its
+    `SKILL.md` for scope and the "what this skill is NOT" caveat.
+
 ## 3. Development workflow
 
 _TODO — record the real commands once tooling is chosen._ Document the
