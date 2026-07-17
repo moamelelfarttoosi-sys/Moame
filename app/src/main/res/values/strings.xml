@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Moame</string>
+    <string name="accessibility_service_label">Moame ATS Auto-Fill (Greenhouse/Lever/Workday only)</string>
+    <string name="accessibility_service_description">
+        Fills job-application forms on Greenhouse, Lever, and Workday career pages using your
+        Moame profile and a tailored resume/cover letter. This service is never enabled for
+        LinkedIn or Indeed; those platforms are manual-assist only.
+    </string>
+</resources>
