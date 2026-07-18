@@ -1,0 +1,59 @@
+name: Build APK
+
+# Builds an installable debug APK on GitHub's runners (which have the Android
+# SDK + internet access to Google's Maven repo, unlike the authoring sandbox).
+# The APK is uploaded as a downloadable artifact on each run.
+
+on:
+  push:
+    branches:
+      - claude/ai-agent-job-email-9rjnwu
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.10.2"
+
+      - name: Build debug APK
+        run: gradle :app:assembleDebug --stacktrace --no-daemon
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: moame-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+
+      # Publish the APK as a GitHub Release asset so it has a stable, direct
+      # download URL that works on a phone browser without signing in or
+      # unzipping (unlike the Actions artifact, which is a login-gated ZIP):
+      #   https://github.com/<owner>/<repo>/releases/download/debug-latest/app-debug.apk
+      - name: Publish APK to a GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: debug-latest
+          name: Moame debug APK (latest)
+          body: |
+            Latest Moame debug build, updated automatically on each push.
+            Download `app-debug.apk` below and open it on your phone to install.
+          prerelease: true
+          files: app/build/outputs/apk/debug/*.apk
