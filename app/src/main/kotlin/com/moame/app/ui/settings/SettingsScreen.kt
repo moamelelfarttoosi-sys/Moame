@@ -48,7 +48,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
 
     val signInLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-        task.result?.email?.let { viewModel.onGmailSignedIn(it) }
+        runCatching { task.result }.getOrNull()?.email?.let { viewModel.onGmailSignedIn(it) }
     }
 
     Scaffold(topBar = { TopAppBar(title = { Text("Settings") }) }) { padding ->
