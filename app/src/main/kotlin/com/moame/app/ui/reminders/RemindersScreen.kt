@@ -41,8 +41,9 @@ fun RemindersScreen(viewModel: RemindersViewModel = hiltViewModel()) {
                         }
                         Text(reminder.reason, style = MaterialTheme.typography.bodyMedium)
                         Text("Recommended action: ${reminder.recommendedAction}", style = MaterialTheme.typography.bodySmall)
-                        if (reminder.dueAt != null) {
-                            val formatted = DateFormat.getDateTimeInstance().format(Date(reminder.dueAt))
+                        val dueAt = reminder.dueAt
+                        if (dueAt != null) {
+                            val formatted = DateFormat.getDateTimeInstance().format(Date(dueAt))
                             Text("Due: $formatted", style = MaterialTheme.typography.bodySmall)
                         }
                         OutlinedButton(onClick = { viewModel.resolve(reminder.id) }) { Text("Mark resolved") }
