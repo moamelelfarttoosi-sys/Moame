@@ -44,16 +44,17 @@ android {
         resources {
             excludes += listOf(
                 "META-INF/DEPENDENCIES",
-                "META-INF/LICENSE",
-                "META-INF/LICENSE.txt",
-                "META-INF/license.txt",
-                "META-INF/NOTICE",
-                "META-INF/NOTICE.txt",
-                "META-INF/notice.txt",
                 "META-INF/INDEX.LIST",
                 "META-INF/*.kotlin_module",
                 "META-INF/AL2.0",
                 "META-INF/LGPL2.1",
+                // Google API client + related jars each ship LICENSE/NOTICE files
+                // in .txt and .md form; collapse all of them to avoid merge conflicts.
+                "META-INF/LICENSE*",
+                "META-INF/NOTICE*",
+                "META-INF/license*",
+                "META-INF/notice*",
+                "META-INF/*.md",
             )
         }
     }
