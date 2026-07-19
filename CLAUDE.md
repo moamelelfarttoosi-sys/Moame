@@ -19,16 +19,32 @@ Guidance for AI assistants (Claude Code and others) working in this repository.
 
 ## 2. Repository structure
 
-_TODO — fill in as directories are created._ Keep this as a short map of the
-top-level layout and what each part is responsible for, e.g.:
-
 ```
 .
-├── src/            # application source
-├── tests/          # automated tests
-├── docs/           # documentation
-└── ...
+├── CLAUDE.md       # this file
+└── .mcp.json       # project-scoped MCP servers (see section 2.1)
 ```
+
+_TODO — extend as directories are created._ Keep this as a short map of the
+top-level layout and what each part is responsible for, e.g. `src/`, `tests/`,
+`docs/`.
+
+### 2.1 MCP servers (`.mcp.json`)
+
+- **linkedin** — [stickerdaniel/linkedin-mcp-server](https://github.com/stickerdaniel/linkedin-mcp-server),
+  run via `uvx mcp-server-linkedin@latest`. Provides LinkedIn tools
+  (profile/company/job scraping, people search, messaging, feed).
+  - Requires `uv`/`uvx` on PATH.
+  - `CHROME_PATH` is set to `/opt/pw-browsers/chromium`, the Chromium
+    pre-installed in Claude Code remote containers. This makes the server skip
+    its own browser download (the Playwright CDN is blocked by the container
+    network policy). If you run this repo locally, remove `CHROME_PATH` or
+    point it at a local Chrome/Chromium.
+  - Authentication: the server needs a logged-in LinkedIn browser session
+    (interactive `--login` or auto-import from a local browser, stored in
+    `~/.linkedin-mcp/profile/`). Remote containers are ephemeral and headless,
+    so a session created there does not persist; log in on a local machine if
+    you need authenticated tools.
 
 When adding a new top-level directory, add a one-line description here.
 
