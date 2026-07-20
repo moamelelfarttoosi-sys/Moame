@@ -432,7 +432,7 @@ def fetch_gemini_limits(logger):
     logger.info("Fetching Gemini limits...")
     client = cloudquotas_v1.CloudQuotasClient()
     request = cloudquotas_v1.ListQuotaInfosRequest(
-        parent=f"projects/{os.environ["GCP_PROJECT_ID"]}/locations/global/services/generativelanguage.googleapis.com"
+        parent=f"projects/{os.environ['GCP_PROJECT_ID']}/locations/global/services/generativelanguage.googleapis.com"
     )
     pager = client.list_quota_infos(request=request)
     models = defaultdict(dict)
@@ -929,7 +929,7 @@ def main():
     if vertex_gemini_models:
         for model in vertex_gemini_models:
             limits_str = get_human_limits(model)
-            model_list_markdown += f'<tr><td><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/gemini-experimental" target="_blank">{model['name']}</a></td>'
+            model_list_markdown += f'<tr><td><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/gemini-experimental" target="_blank">{model["name"]}</a></td>'
             if first_gemini:
                 model_list_markdown += f'<td rowspan="{len(vertex_gemini_models)}">{limits_str}<br>Shared Quota</td>'
                 first_gemini = False
@@ -939,13 +939,13 @@ def main():
     if vertex_llama_models:
         for model in vertex_llama_models:
             limits_str = get_human_limits(model)
-            model_list_markdown += f'<tr><td><a href="https://console.cloud.google.com/vertex-ai/publishers/meta/model-garden/{model['urlId']}" target="_blank">{model['name']}</a></td><td>{limits_str}<br>Free during preview</td></tr>\n'
+            model_list_markdown += f'<tr><td><a href="https://console.cloud.google.com/vertex-ai/publishers/meta/model-garden/{model["urlId"]}" target="_blank">{model["name"]}</a></td><td>{limits_str}<br>Free during preview</td></tr>\n'
 
     # Write DeepSeek models to table
     if vertex_deepseek_models:
         for model in vertex_deepseek_models:
             limits_str = get_human_limits(model)
-            model_list_markdown += f'<tr><td><a href="https://console.cloud.google.com/vertex-ai/publishers/deepseek-ai/model-garden/{model['urlId']}" target="_blank">{model['name']}</a></td><td>{limits_str}<br>Free during preview</td></tr>\n'
+            model_list_markdown += f'<tr><td><a href="https://console.cloud.google.com/vertex-ai/publishers/deepseek-ai/model-garden/{model["urlId"]}" target="_blank">{model["name"]}</a></td><td>{limits_str}<br>Free during preview</td></tr>\n'
 
     model_list_markdown += "</tbody></table>\n\n"
 
