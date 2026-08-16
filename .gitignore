@@ -1,0 +1,61 @@
+# Deny by default: only what is explicitly allowed below can be added to git.
+# Local test artifacts, secrets (.env), and tooling stay out without a rule
+# for each one. Tracked files are unaffected.
+/*
+!/.github/
+!/.github/**
+!/docs/
+!/docs/**
+!/service/
+!/service/**
+!/skills/remove-ai-marks/
+!/skills/remove-ai-marks/**
+!/tests/
+!/tests/**
+!/.dockerignore
+!/.env.example
+!/.gitignore
+!/CODE_OF_CONDUCT.md
+!/compose-check.sh
+!/compose.yaml
+!/CONTRIBUTING.md
+!/LICENSE
+!/Makefile
+!/pytest.ini
+!/README.md
+!/requirements-dev.txt
+!/SECURITY.md
+
+# --- local additions (this fork; see UPSTREAM.md) -------------------------
+# Upstream's allowlist omits these because upstream does not track a Claude
+# Code install or ship the optional Cursor skill through the same rules.
+!/.claude/
+!/.claude/**
+!/integrations/
+!/integrations/**
+!/install_skill.py
+!/install-skill.sh
+!/UPSTREAM.md
+
+# `/*` above excludes `/skills`, and git will not re-include a path whose
+# parent directory is excluded — so the `!/skills/remove-ai-marks/**` rule on
+# line 12 never fires and every skill file is silently untracked. It goes
+# unnoticed upstream because those files are already tracked there; in a fresh
+# copy the skill would simply be missing. Re-include the directory so git
+# descends into it, then restore deny-by-default one level down.
+!/skills/
+/skills/*
+!/skills/remove-ai-marks/
+!/skills/clean-user-facing-text/
+# --------------------------------------------------------------------------
+
+# Exceptions even inside allowed trees
+.env
+**/__pycache__/
+*.pyc
+.venv/
+.firecrawl/
+.figlet/
+posts.md
+*.cleaned.*
+*.bak
