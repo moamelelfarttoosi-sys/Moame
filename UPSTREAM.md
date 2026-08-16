@@ -26,9 +26,23 @@ re-apply.
    skill. Upstream documents the same pattern for `.grok/skills`.
 2. **`.gitignore`** — upstream's allowlist is deny-by-default (`/*` then
    explicit `!` rules), so a "local additions" block was appended to allow
-   `.claude/`, `integrations/`, `skills/clean-user-facing-text/`,
-   `install_skill.py`, `install-skill.sh` and this file. Without it those paths
-   are silently untracked.
+   `.claude/`, `integrations/`, `install_skill.py`, `install-skill.sh` and this
+   file.
+
+   The same block also **fixes a latent upstream bug**. `/*` excludes
+   `/skills`, and git will not re-include a path whose parent directory is
+   excluded, so upstream's `!/skills/remove-ai-marks/**` never fires — in a
+   fresh copy every skill file is silently untracked, and `git add -A` commits
+   the service without the skill. Upstream does not hit this because those
+   files are already tracked there. The fix re-includes the directory so git
+   descends into it, then restores deny-by-default one level down:
+
+   ```gitignore
+   !/skills/
+   /skills/*
+   !/skills/remove-ai-marks/
+   !/skills/clean-user-facing-text/
+   ```
 3. **`README.md`** — a four-line provenance banner prepended above upstream's
    logo. The rest of the file is upstream's, unchanged.
 4. **`UPSTREAM.md`** — this file.
