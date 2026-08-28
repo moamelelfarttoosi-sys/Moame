@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin.json",
+  "name": "everything-claude-code",
+  "version": "1.0.0",
+  "description": "A complete Claude Code configuration pack: specialized subagents, workflow skills, slash commands, always-follow rules, lifecycle hooks and MCP server configs.",
+  "author": {
+    "name": "Everything Claude Code contributors"
+  },
+  "keywords": [
+    "agents",
+    "skills",
+    "commands",
+    "hooks",
+    "rules",
+    "tdd",
+    "code-review",
+    "security"
+  ]
+}

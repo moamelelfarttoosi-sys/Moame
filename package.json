@@ -1,0 +1,23 @@
+{
+  "name": "everything-claude-code",
+  "version": "1.0.0",
+  "description": "Agents, skills, commands, rules, hooks and MCP configs for Claude Code.",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "type": "commonjs",
+  "scripts": {
+    "test": "node tests/run-all.js",
+    "setup-pm": "node scripts/setup-package-manager.js",
+    "validate": "node tests/run-all.js"
+  },
+  "keywords": [
+    "claude-code",
+    "agents",
+    "skills",
+    "hooks",
+    "plugin"
+  ]
+}

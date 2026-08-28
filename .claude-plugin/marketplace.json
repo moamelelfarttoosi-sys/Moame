@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "everything-claude-code",
+  "owner": {
+    "name": "Everything Claude Code"
+  },
+  "metadata": {
+    "description": "Self-hosted marketplace serving the everything-claude-code plugin.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "everything-claude-code",
+      "source": "./",
+      "description": "Agents, skills, commands, rules, hooks and MCP configs for Claude Code.",
+      "version": "1.0.0",
+      "category": "workflow"
+    }
+  ]
+}
