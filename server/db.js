@@ -1,7 +1,26 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
-const { DatabaseSync } = require('node:sqlite');
+
+// IDMS uses Node's built-in SQLite (node:sqlite), added in Node 22.5 and on some
+// 22.x builds gated behind --experimental-sqlite. Fail with a clear, actionable
+// message instead of an opaque stack trace when it is unavailable.
+let DatabaseSync;
+try {
+  ({ DatabaseSync } = require('node:sqlite'));
+  if (typeof DatabaseSync !== 'function') throw new Error('node:sqlite present but DatabaseSync is unavailable');
+} catch (err) {
+  const v = process.versions.node;
+  console.error('\n[IDMS] Cannot start — the built-in SQLite module (node:sqlite) is unavailable.');
+  console.error(`[IDMS] Detected Node.js v${v}. IDMS requires Node.js v22.5.0 or newer.`);
+  console.error('[IDMS] Fix:');
+  console.error('[IDMS]   1) Install Node.js 22 LTS or newer from https://nodejs.org , then run:  npm start');
+  console.error('[IDMS]   2) If you are on Node 22.x and still see this, start with the flag:');
+  console.error('[IDMS]        node --experimental-sqlite server/index.js');
+  console.error(`[IDMS] (underlying error: ${err && err.message})\n`);
+  process.exit(1);
+}
+
 const config = require('./config');
 
 fs.mkdirSync(config.storageDir, { recursive: true });

@@ -7,8 +7,10 @@
     "node": ">=22.5.0"
   },
   "scripts": {
-    "start": "node server/index.js",
-    "dev": "node server/index.js"
+    "start": "node --experimental-sqlite server/index.js",
+    "dev": "node --experimental-sqlite server/index.js",
+    "seed": "node --experimental-sqlite server/seed.js",
+    "migrate": "node --experimental-sqlite server/migrate.js"
   },
   "dependencies": {
     "express": "4.22.2",
