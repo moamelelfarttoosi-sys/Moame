@@ -1,0 +1,17 @@
+{
+  "name": "idms",
+  "version": "1.0.0",
+  "description": "IDMS — Integrated Document Management System for controlled document management in an Oil & Gas / EPC project environment.",
+  "private": true,
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js"
+  },
+  "dependencies": {
+    "express": "4.22.2",
+    "multer": "1.4.4"
+  }
+}

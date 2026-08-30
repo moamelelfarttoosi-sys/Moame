@@ -1,0 +1,66 @@
+# IDMS — Setup Instructions
+
+## Quick Start (Windows)
+
+### Step 1: Extract the zip
+Right-click `idms.zip` → Extract All → Choose a folder (e.g. `C:\idms`)
+
+### Step 2: Install Node.js
+Download and install Node.js from: https://nodejs.org/en/download
+Choose the LTS version (v20 or v22). During installation, check "Add to PATH".
+
+### Step 3: Install dependencies
+Open Command Prompt in the extracted folder:
+```
+cd C:\idms
+npm install
+```
+
+### Step 4: Start the server
+```
+node server/index.js
+```
+
+### Step 5: Open in browser
+Go to: http://localhost:8088
+
+### Login
+- Username: `admin`
+- Password: `Password123!`
+
+---
+
+## Alternative: Use Portable Node.js
+
+If you don't want to install Node.js system-wide:
+
+1. Download the portable version: https://nodejs.org/dist/v20.18.0/node-v20.18.0-win-x64.zip
+2. Extract it to `C:\node` (so `C:\node\node.exe` exists)
+3. In the IDMS folder, run:
+```
+set PATH=C:\node;%PATH%
+npm install
+node server/index.js
+```
+
+---
+
+## Alternative: Use start-server.vbs
+
+Double-click `start-server.vbs` in the extracted folder. It will start the server in the background.
+
+---
+
+## Troubleshooting
+
+**Port 8088 already in use:**
+```
+taskkill /F /IM node.exe
+node server/index.js
+```
+
+**Database issues:**
+Delete `storage/idms.db` and restart the server. It will recreate and reseed automatically.
+
+**Permission errors:**
+Run Command Prompt as Administrator.
