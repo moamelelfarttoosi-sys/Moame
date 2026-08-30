@@ -1,0 +1,22 @@
+# Render Blueprint — deploy IDMS from GitHub with no local Node install.
+# In the Render dashboard: New + → Blueprint → pick this repo/branch.
+services:
+  - type: web
+    name: idms
+    runtime: node
+    plan: free
+    branch: claude/idms-ui-ux-redesign-nkuxyu
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      # node:sqlite requires Node >= 22.5. Pin a Node 22 LTS.
+      - key: NODE_VERSION
+        value: 22.12.0
+      # Session signing secret — generated once by Render, kept stable.
+      - key: IDMS_JWT_SECRET
+        generateValue: true
+    # NOTE: Render's free plan has an ephemeral filesystem, so the SQLite
+    # database resets on restart/redeploy (the app re-seeds demo data on boot).
+    # For persistent data, upgrade the plan and attach a Disk mounted at
+    # /opt/render/project/src/storage.
