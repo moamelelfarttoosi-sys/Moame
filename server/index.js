@@ -79,6 +79,24 @@ app.use((err, req, res, next) => {
   });
 });
 
+// First-run convenience: if the database has no users yet (e.g. a fresh cloud
+// deploy), seed the demonstration data automatically so the app is usable the
+// moment it comes up. Disable with IDMS_AUTOSEED=0.
+if (process.env.IDMS_AUTOSEED !== '0') {
+  try {
+    const { q } = require('./db');
+    const hasUsers = q.get('SELECT COUNT(*) c FROM users').c > 0;
+    if (!hasUsers) {
+      console.log('[IDMS] Empty database detected — seeding demonstration data…');
+      require('child_process').execFileSync(
+        process.execPath, ['--experimental-sqlite', path.join(__dirname, 'seed.js')],
+        { stdio: 'inherit' });
+    }
+  } catch (e) {
+    console.error('[IDMS] Auto-seed skipped:', e.message);
+  }
+}
+
 require('./lib/scheduler').start(config.escalationIntervalMs);
 
 app.listen(config.port, () => {
