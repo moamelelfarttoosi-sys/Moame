@@ -5,7 +5,7 @@ services:
     name: idms
     runtime: node
     plan: free
-    branch: claude/idms-ui-ux-redesign-nkuxyu
+    branch: main
     buildCommand: npm install
     startCommand: npm start
     healthCheckPath: /healthz
