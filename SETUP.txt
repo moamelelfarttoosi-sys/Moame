@@ -1,0 +1,81 @@
+# IDMS — Setup Instructions
+
+IMPORTANT: IDMS uses Node.js's built-in SQLite (node:sqlite). You MUST use
+Node.js v22.5.0 or newer. Node 20 and older will NOT work — the server will
+refuse to start with a message telling you to upgrade.
+
+## Quick Start (Windows)
+
+### Step 1: Extract the zip
+Right-click `idms.zip` → Extract All → Choose a folder (e.g. `C:\idms`)
+
+### Step 2: Install Node.js  (v22.5 or newer — NOT v20)
+Download and install Node.js from: https://nodejs.org/en/download
+Choose the LTS version (v22 LTS or newer). During installation, check "Add to PATH".
+Verify after installing — open a new Command Prompt and run:
+```
+node --version
+```
+It must print v22.5.0 or higher. If it prints v20.x (or lower), install Node 22 LTS.
+
+### Step 3: Install dependencies
+Open Command Prompt in the extracted folder:
+```
+cd C:\idms
+npm install
+```
+
+### Step 4: Create the database (first time only)
+```
+npm run seed
+```
+
+### Step 5: Start the server
+```
+npm start
+```
+(`npm start` runs the server with the required SQLite flag. Equivalent to
+`node --experimental-sqlite server/index.js`.)
+
+### Step 6: Open in browser
+Go to: http://localhost:8088
+
+### Login
+- Username: `admin`
+- Password: `Password123!`
+
+---
+
+## Alternative: Use start-server.vbs
+
+Double-click `start-server.vbs` in the extracted folder. It starts the server in
+the background. (This still requires Node.js v22.5+ installed and on PATH.)
+
+---
+
+## Troubleshooting
+
+**Server won't start / "node:sqlite is unavailable":**
+Your Node.js is too old. Run `node --version`; if it is below v22.5.0, install
+Node 22 LTS from https://nodejs.org and try `npm start` again.
+
+**Port 8088 already in use:**
+```
+taskkill /F /IM node.exe
+npm start
+```
+Or run on a different port:
+```
+set PORT=9000
+npm start
+```
+
+**Database issues / want a clean start:**
+Stop the server, delete the `storage` folder (or just `storage\idms.db*`), then:
+```
+npm run seed
+npm start
+```
+
+**Permission errors:**
+Run Command Prompt as Administrator.
